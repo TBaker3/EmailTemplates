@@ -23,14 +23,7 @@ export default function InspectorDrawer() {
   };
 
   return (
-    <Drawer
-      variant="persistent"
-      anchor="right"
-      open={inspectorDrawerOpen}
-      sx={{
-        width: inspectorDrawerOpen ? INSPECTOR_DRAWER_WIDTH : 0,
-      }}
-    >
+    <>
       <Box sx={{ width: INSPECTOR_DRAWER_WIDTH, height: 49, borderBottom: 1, borderColor: 'divider' }}>
         <Box px={2}>
           <Tabs value={selectedSidebarTab} onChange={(_, v) => setSidebarTab(v)}>
@@ -42,6 +35,6 @@ export default function InspectorDrawer() {
       <Box sx={{ width: INSPECTOR_DRAWER_WIDTH, height: 'calc(100% - 49px)', overflow: 'auto' }}>
         {renderCurrentSidebarPanel()}
       </Box>
-    </Drawer>
+    </>
   );
 }

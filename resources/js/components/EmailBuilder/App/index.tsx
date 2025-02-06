@@ -25,16 +25,13 @@ export default function App() {
 
   return (
     <>
-      <InspectorDrawer />
-
-      <Stack
-        sx={{
-          marginRight: inspectorDrawerOpen ? `${INSPECTOR_DRAWER_WIDTH}px` : 0,
-          marginLeft: 0,
-          transition: [marginLeftTransition, marginRightTransition].join(', '),
-        }}
-      >
-        <TemplatePanel />
+      <Stack direction="row">
+       <Stack sx={{ flexGrow: 1 }}>
+          <TemplatePanel />
+        </Stack>
+        <Stack>
+          <InspectorDrawer />
+        </Stack>
       </Stack>
     </>
   );

@@ -27,7 +27,7 @@ export const BUTTONS: TButtonProps[] = [
     block: () => ({
       type: 'Heading',
       data: {
-        props: { text: 'Hello friend' },
+        props: { text: null },
         style: {
           padding: { top: 16, bottom: 16, left: 24, right: 24 },
         },
@@ -40,7 +40,7 @@ export const BUTTONS: TButtonProps[] = [
     block: () => ({
       type: 'Text',
       data: {
-        props: { text: 'My new text block' },
+        props: { text: null },
         style: {
           padding: { top: 16, bottom: 16, left: 24, right: 24 },
           fontWeight: 'normal',
@@ -56,8 +56,8 @@ export const BUTTONS: TButtonProps[] = [
       type: 'Button',
       data: {
         props: {
-          text: 'Button',
-          url: 'https://www.usewaypoint.com',
+          text: 'Click Me!',
+          url: null,
         },
         style: { padding: { top: 16, bottom: 16, left: 24, right: 24 } },
       },
@@ -70,8 +70,8 @@ export const BUTTONS: TButtonProps[] = [
       type: 'Image',
       data: {
         props: {
-          url: 'https://assets.usewaypoint.com/sample-image.jpg',
-          alt: 'Sample product',
+          url: null,
+          alt: null,
           contentAlignment: 'middle',
           linkHref: null,
         },
@@ -86,7 +86,7 @@ export const BUTTONS: TButtonProps[] = [
       type: 'Avatar',
       data: {
         props: {
-          imageUrl: 'https://ui-avatars.com/api/?size=128',
+          imageUrl: null,
           shape: 'circle',
         },
         style: { padding: { top: 16, bottom: 16, left: 24, right: 24 } },
@@ -120,7 +120,7 @@ export const BUTTONS: TButtonProps[] = [
     block: () => ({
       type: 'Html',
       data: {
-        props: { contents: '<strong>Hello world</strong>' },
+        props: { contents: null },
         style: {
           fontSize: 16,
           textAlign: null,
