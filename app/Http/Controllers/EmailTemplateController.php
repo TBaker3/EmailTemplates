@@ -36,8 +36,8 @@ class EmailTemplateController extends Controller
         ]);
 
         try{
-            EmailTemplate::create($request->all());
-            return redirect()->route('email-templates.index');
+            $template = EmailTemplate::create($request->all());
+            return redirect()->route('email-templates.edit',$template);
         }catch(\Illuminate\Database\QueryException $e){
             throw $e;
         }
@@ -48,7 +48,9 @@ class EmailTemplateController extends Controller
      */
     public function show(EmailTemplate $emailTemplate)
     {
-
+        return view('email-templates.show', [
+            'emailTemplate' => $emailTemplate,
+        ]);
     }
 
     /**
@@ -74,7 +76,7 @@ class EmailTemplateController extends Controller
 
         try{
             $emailTemplate->update($request->all());
-            return redirect()->route('email-templates.index');
+            return redirect()->route('email-templates.edit',$emailTemplate);
         }catch(\Illuminate\Database\QueryException $e){
             return back()->withErrors(['name' => 'Email template with this name already exists.']);
         }

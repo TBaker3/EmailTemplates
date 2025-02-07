@@ -30,8 +30,9 @@
 								<td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-3">
 									{{ $template->name }}
 								</td>
-								<td>
+								<td class="space-x-2 flex justify-end">
 									<a href="{{ route('email-templates.edit', $template) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+									<a href="{{ route('email-templates.show', $template) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
 								</td>
 							</tr>
 						@empty
