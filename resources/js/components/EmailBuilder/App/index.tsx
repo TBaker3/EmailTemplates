@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Stack, useTheme } from '@mui/material';
 
@@ -8,6 +8,14 @@ import InspectorDrawer, { INSPECTOR_DRAWER_WIDTH } from './InspectorDrawer';
 import SamplesDrawer, { SAMPLES_DRAWER_WIDTH } from './SamplesDrawer';
 import TemplatePanel from './TemplatePanel';
 
+import { renderToStaticMarkup } from '@usewaypoint/email-builder';
+import { useDocument } from '../documents/editor/EditorContext';
+
+import { resetDocument } from '../documents/editor/EditorContext';
+import validateJsonStringValue from './TemplatePanel/ImportJson/validateJsonStringValue';
+
+
+
 function useDrawerTransition(cssProperty: 'margin-left' | 'margin-right', open: boolean) {
   const { transitions } = useTheme();
   return transitions.create(cssProperty, {
@@ -16,12 +24,30 @@ function useDrawerTransition(cssProperty: 'margin-left' | 'margin-right', open: 
   });
 }
 
-export default function App() {
+
+export default function App({name,type,value}) {
   const inspectorDrawerOpen = useInspectorDrawerOpen();
   const samplesDrawerOpen = useSamplesDrawerOpen();
 
   const marginLeftTransition = useDrawerTransition('margin-left', samplesDrawerOpen);
   const marginRightTransition = useDrawerTransition('margin-right', inspectorDrawerOpen);
+
+  const document = useDocument();
+  const code = renderToStaticMarkup(document, { rootBlockId: 'root' });
+  const json = useMemo(() => JSON.stringify(document, null, '  '), [document]);
+
+  useMemo(() => {
+    if (value) {
+      const { error, data } = validateJsonStringValue(value);
+      if (error) {
+        return;
+      }
+      if(data){
+        resetDocument(data);
+
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -31,6 +57,14 @@ export default function App() {
         </Stack>
         <Stack>
           <InspectorDrawer />
+          {type === 'html' && <input type="hidden" value={code} name={name ?? ''} />}
+          {type === 'json' && <input type="hidden" value={json} name={name ?? ''} />}
+          {type === 'both' && (
+            <>
+              <input type="hidden" value={code} name={`${name ?? ''}_html`} />
+              <input type="hidden" value={json} name={`${name ?? ''}_json`} />
+            </>
+          )}
         </Stack>
       </Stack>
     </>

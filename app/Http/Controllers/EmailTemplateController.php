@@ -12,7 +12,9 @@ class EmailTemplateController extends Controller
      */
     public function index()
     {
-        //
+        return view('email-templates.index', [
+            'emailTemplates' => EmailTemplate::all(),
+        ]);
     }
 
     /**
@@ -20,7 +22,7 @@ class EmailTemplateController extends Controller
      */
     public function create()
     {
-        //
+        return view('email-templates.create');
     }
 
     /**
@@ -28,7 +30,17 @@ class EmailTemplateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->merge([
+            'html' => $request->builder_html,
+            'json' => $request->builder_json,
+        ]);
+
+        try{
+            EmailTemplate::create($request->all());
+            return redirect()->route('email-templates.index');
+        }catch(\Illuminate\Database\QueryException $e){
+            throw $e;
+        }
     }
 
     /**
@@ -36,7 +48,7 @@ class EmailTemplateController extends Controller
      */
     public function show(EmailTemplate $emailTemplate)
     {
-        //
+
     }
 
     /**
@@ -44,7 +56,9 @@ class EmailTemplateController extends Controller
      */
     public function edit(EmailTemplate $emailTemplate)
     {
-        //
+        return view('email-templates.edit', [
+            'emailTemplate' => $emailTemplate,
+        ]);
     }
 
     /**
@@ -52,7 +66,19 @@ class EmailTemplateController extends Controller
      */
     public function update(Request $request, EmailTemplate $emailTemplate)
     {
-        //
+
+        $request->merge([
+            'html' => $request->builder_html,
+            'json' => $request->builder_json,
+        ]);
+
+        try{
+            $emailTemplate->update($request->all());
+            return redirect()->route('email-templates.index');
+        }catch(\Illuminate\Database\QueryException $e){
+            return back()->withErrors(['name' => 'Email template with this name already exists.']);
+        }
+
     }
 
     /**

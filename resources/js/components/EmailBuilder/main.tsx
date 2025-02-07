@@ -6,32 +6,19 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import App from './App';
 import theme from './theme';
 
-import { renderToStaticMarkup } from '@usewaypoint/email-builder';
-import { useDocument } from './documents/editor/EditorContext';
-
-function Main() {
-  const document = useDocument();
-
-  useEffect(() => {
-    const logCode = () => {
-      const code = renderToStaticMarkup(document, { rootBlockId: 'root' });
-      console.log(code);
-    };
-
-    logCode(); // Log immediately
-    const interval = setInterval(logCode, 5000);
-
-    return () => clearInterval(interval);
-  }, [document]);
-
+function Main({name, type, value}) {
   return (
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <App />
+        <App name={name ?? ''} type={type} value={value} />
       </ThemeProvider>
     </React.StrictMode>
   );
 }
-
-ReactDOM.createRoot(document.getElementById('email-builder-react')!).render(<Main />);
+// get the name 
+const name = document.getElementById('email-builder-react')?.getAttribute('name') ?? 'email-builder-react';
+const type = document.getElementById('email-builder-react')?.getAttribute('type') ?? 'json';
+const value = document.getElementById('email-builder-react')?.getAttribute('value') ?? '';
+ReactDOM.createRoot(document.getElementById('email-builder-react')!).render(<Main name={name} type={type} value={value} />);
+document.getElementById('email-builder-react')?.removeAttribute('name');
